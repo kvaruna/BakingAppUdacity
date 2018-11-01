@@ -14,6 +14,7 @@ import com.example.varun.bakingappudacity.R;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.ViewHolder> {
 
@@ -44,7 +45,16 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return ingredientList.size();
+        if( ingredientList != null) {
+            return ingredientList.size();
+        } else {
+            return 0;
+        }
+    }
+
+    public void updateAdapter(List<Ingredient> ingredients) {
+        this.ingredientList = ingredients;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -55,9 +65,10 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         TextView ingredientValue;
         @BindView(R.id.quantity_value)
         TextView quantityValue;
+         ViewHolder(View itemView) {
+             super(itemView);
+             ButterKnife.bind(this,itemView);
 
-        public ViewHolder(View itemView) {
-            super(itemView);
         }
     }
 }

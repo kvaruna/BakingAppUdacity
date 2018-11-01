@@ -13,46 +13,47 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.varun.bakingappudacity.Activities.DetailsActivity;
 import com.example.varun.bakingappudacity.Adapters.IngredientAdapter;
-import com.example.varun.bakingappudacity.Models.Ingredient;
+import com.example.varun.bakingappudacity.Models.Recipe;
 import com.example.varun.bakingappudacity.R;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+@SuppressLint("ValidFragment")
 public class IngredientFragment extends Fragment {
-
+    private static final String ingredBundle = "Recipe";
     @BindView(R.id.rv_steps)
     RecyclerView recyclerView;
 
     Context context;
-    List<Ingredient> ingredientList;
     IngredientAdapter adapter;
+    public IngredientFragment() { }
 
-    @SuppressLint("ValidFragment")
-    public IngredientFragment(List<Ingredient> ingredients) {
-        this.ingredientList = ingredients;
-        Log.d("This is Size","---"+ingredients.size());
+    public static IngredientFragment newInstance(Recipe recipe) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Recipe", recipe);
+        IngredientFragment fragment = new IngredientFragment();
+        fragment.setArguments(bundle);
+        return fragment;
     }
-
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.layout_ingredients_fragment, container, false);
+        Recipe recipe = (Recipe) getArguments().getSerializable(ingredBundle);
         ButterKnife.bind(this, view);
         context = getContext();
-        //setUpRecyclerView();
-        return view;
-    }
-
-    private void setUpRecyclerView() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(linearLayoutManager);
-        adapter = new IngredientAdapter(ingredientList,context);
+        adapter = new IngredientAdapter(recipe.getIngredients(),context);
         recyclerView.setAdapter(adapter);
+        if( recipe != null) {
+            adapter.updateAdapter(recipe.getIngredients());
+        } else {
+            Log.e("Fragment", "Recipe is null");
+        }
+        return view;
     }
 }

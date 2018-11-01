@@ -11,7 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.design.widget.TabLayout;
 import android.util.Log;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.varun.bakingappudacity.Adapters.RecipeDetailsPagerAdapter;
 import com.example.varun.bakingappudacity.Fragments.IngredientFragment;
 import com.example.varun.bakingappudacity.Fragments.StepsFragment;
 import com.example.varun.bakingappudacity.Models.Ingredient;
@@ -36,61 +38,16 @@ public class DetailsActivity extends AppCompatActivity {
         setContentView(R.layout.layout_details_activity);
         ButterKnife.bind(this);
         context = this;
-        if (getIntent().hasExtra("Recipe"))
-        {
-            this.recipe = getIntent().getParcelableExtra("Recipe");
-            this.setTitle(context.getResources().getString(R.string.lets_key)+recipe.getName());
-            for (Ingredient ingredient : recipe.getIngredients()){
-                Log.d("This is something",""+ingredient.getIngredient());
-            }
-            //setUpTabs();
+
+        if( getIntent().getExtras() != null) {
+            recipe  =  (Recipe) getIntent().getExtras().getSerializable("Recipe");
+            this.setTitle(recipe.getName());
+            viewPager.setAdapter(new RecipeDetailsPagerAdapter(this, getSupportFragmentManager(), recipe));
+            tabLayout.setupWithViewPager(viewPager);
+        }
+        else {
+            Toast.makeText(context, "No Data Received, Try again", Toast.LENGTH_SHORT).show();
         }
 
-    }
-
-    private void setUpTabs() {
-        viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-
-                switch (position) {
-                    case 0:
-                        return new IngredientFragment(recipe.getIngredients());
-                    case 1:
-                        return new StepsFragment(recipe.getSteps());
-                    default:
-                        return new StepsFragment(recipe.getSteps());
-                }
-            }
-
-            @Override
-            public void destroyItem(ViewGroup container, int position, Object object) {
-                super.destroyItem(container, position, object);
-            }
-
-            @Override
-            public int getCount() {
-                return 2;
-            }
-
-            @Override
-            public int getItemPosition(@NonNull Object object) {
-                return POSITION_NONE;
-            }
-
-            @Override
-            public CharSequence getPageTitle(int position) {
-                switch (position) {
-                    case 0:
-                        return "Ingredients";
-                    case 1:
-                        return "Steps";
-                    default:
-                        return "Error";
-                }
-            }
-        });
-        viewPager.getAdapter().notifyDataSetChanged();
-        tabLayout.setupWithViewPager(viewPager);
     }
 }

@@ -4,5 +4,6 @@
     <color name="colorPrimaryDark">#6f9fed</color>
     <color name="colorAccent">#6499ef</color>
     <color name="titleColor">#455A64</color>
-
+    <color name="white">#FFFFFF</color>
+    <color name="badgeBkg">#eef2f4</color>
 </resources>
