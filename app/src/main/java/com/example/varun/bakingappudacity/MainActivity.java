@@ -1,17 +1,21 @@
 package com.example.varun.bakingappudacity;
 
-import android.os.AsyncTask;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.Toast;
+import android.view.View;
+import android.view.animation.TranslateAnimation;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.varun.bakingappudacity.APIClient.APIClient;
 import com.example.varun.bakingappudacity.APIMethods.APIMethods;
+import com.example.varun.bakingappudacity.Adapters.RecipeAdapter;
 import com.example.varun.bakingappudacity.Models.Recipe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -24,12 +28,20 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.rv_recepies)
     RecyclerView rv_recepies;
+    @BindView(R.id.loader)
+    ProgressBar loader;
+    @BindView(R.id.heading)
+    TextView heading;
+    RecipeAdapter adapter;
+    Context context;
     private APIMethods apiMethods;
     List<Recipe> recipeList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        context = this;
         ButterKnife.bind(this);
         apiMethods = APIClient.getClient().create(APIMethods.class);
         getRecipesList();
@@ -41,14 +53,25 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
                 recipeList = response.body();
-                Toast.makeText(MainActivity.this, "This is size"+recipeList.size(), Toast.LENGTH_SHORT).show();
+                setupRecyclerView();
             }
 
             @Override
             public void onFailure(Call<List<Recipe>> call, Throwable t) {
-                Log.d("This is error",": "+t.getMessage());
+                Log.d("This is error", ": " + t.getMessage());
             }
         });
     }
+
+    private void setupRecyclerView() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+        rv_recepies.setLayoutManager(linearLayoutManager);
+        adapter = new RecipeAdapter(recipeList, context);
+        rv_recepies.setAdapter(adapter);
+        rv_recepies.setVisibility(View.VISIBLE);
+        heading.setVisibility(View.VISIBLE);
+        loader.setVisibility(View.GONE);
+    }
+
 
 }
