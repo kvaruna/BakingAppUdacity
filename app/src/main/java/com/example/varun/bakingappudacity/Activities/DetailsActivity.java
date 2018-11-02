@@ -19,6 +19,7 @@ import com.example.varun.bakingappudacity.Fragments.StepsFragment;
 import com.example.varun.bakingappudacity.Models.Ingredient;
 import com.example.varun.bakingappudacity.Models.Recipe;
 import com.example.varun.bakingappudacity.R;
+import com.example.varun.bakingappudacity.Widget.WidgetUpdateService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,6 +45,7 @@ public class DetailsActivity extends AppCompatActivity {
             this.setTitle(recipe.getName());
             viewPager.setAdapter(new RecipeDetailsPagerAdapter(this, getSupportFragmentManager(), recipe));
             tabLayout.setupWithViewPager(viewPager);
+            WidgetUpdateService.updatingWidget(this, recipe);
         }
         else {
             Toast.makeText(context, "No Data Received, Try again", Toast.LENGTH_SHORT).show();

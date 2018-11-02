@@ -20,5 +20,20 @@
             android:theme="@style/AppTheme"/>
         <activity android:name=".Activities.StepVideo"
             android:theme="@style/AppTheme"/>
+
+        <service android:name=".Widget.WidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
+        <service android:name=".Widget.WidgetUpdateService"/>
+
+        <receiver android:name=".Widget.RecipeWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE_INGREDIENTS"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_info"/>
+        </receiver>
     </application>
 </manifest>

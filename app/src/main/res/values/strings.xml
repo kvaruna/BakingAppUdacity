@@ -7,4 +7,5 @@
     <string name="measure">Measure</string>
     <string name="ingredient">Ingredient</string>
     <string name="servings">Serves For &#160;</string>
+    <string name="recipe_name">Recipe Name</string>
 </resources>
