@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.example.varun.bakingappudacity.Activities.StepVideo;
@@ -19,6 +20,7 @@ import com.example.varun.bakingappudacity.Models.Ingredient;
 import com.example.varun.bakingappudacity.Models.Step;
 import com.example.varun.bakingappudacity.R;
 
+import java.io.Serializable;
 import java.util.List;
 
 import butterknife.BindView;
@@ -43,7 +45,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         TextDrawable drawable = TextDrawable.builder()
                 .beginConfig().textColor(Color.BLACK)
                 .endConfig()
@@ -55,7 +57,8 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
             public void onClick(View view) {
                 Intent intent = new Intent(context, StepVideo.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("Step",stepList.get(holder.getAdapterPosition()));
+                bundle.putSerializable("Step", (Serializable) stepList);
+                bundle.putSerializable("Position", holder.getAdapterPosition());
                 intent.putExtras(bundle);
                 context.startActivity(intent);
             }
