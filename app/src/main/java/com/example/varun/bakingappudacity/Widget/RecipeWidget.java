@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.example.varun.bakingappudacity.Activities.DetailsActivity;
+import com.example.varun.bakingappudacity.Constants.Constants;
 import com.example.varun.bakingappudacity.Models.Recipe;
 import com.example.varun.bakingappudacity.R;
 
@@ -26,7 +27,7 @@ public class RecipeWidget extends AppWidgetProvider {
         Intent intent =new Intent(context,WidgetService.class);
         remoteViews.setRemoteAdapter(R.id.rv_widget,intent);
         Intent appIntent = new Intent(context,DetailsActivity.class);
-        appIntent.putExtra("Recipe",recipe);
+        appIntent.putExtra(Constants.RECIPE,recipe);
         PendingIntent pendingIntent = PendingIntent.getActivity(context,0,appIntent, 0);
         remoteViews.setPendingIntentTemplate(R.id.rv_widget,pendingIntent);
         manager.updateAppWidget(id,remoteViews);
@@ -59,7 +60,7 @@ public class RecipeWidget extends AppWidgetProvider {
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, RecipeWidget.class));
         String bundle = intent.getAction();
         if( bundle.equals("android.appwidget.action.APPWIDGET_UPDATE_INGREDIENTS")) {
-            recipe = (Recipe) intent.getExtras().getSerializable("Recipe");
+            recipe = (Recipe) intent.getExtras().getSerializable(Constants.RECIPE);
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.rv_widget);
             RecipeWidget.onUpdateWidgets(context, appWidgetManager, appWidgetIds);
             super.onReceive(context, intent);

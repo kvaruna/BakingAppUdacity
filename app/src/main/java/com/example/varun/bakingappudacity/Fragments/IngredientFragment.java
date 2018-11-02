@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.varun.bakingappudacity.Adapters.IngredientAdapter;
+import com.example.varun.bakingappudacity.Constants.Constants;
 import com.example.varun.bakingappudacity.Models.Recipe;
 import com.example.varun.bakingappudacity.R;
 
@@ -22,7 +23,6 @@ import butterknife.ButterKnife;
 
 @SuppressLint("ValidFragment")
 public class IngredientFragment extends Fragment {
-    private static final String ingredBundle = "Recipe";
     @BindView(R.id.rv_steps)
     RecyclerView recyclerView;
 
@@ -32,7 +32,7 @@ public class IngredientFragment extends Fragment {
 
     public static IngredientFragment newInstance(Recipe recipe) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable("Recipe", recipe);
+        bundle.putSerializable(Constants.RECIPE, recipe);
         IngredientFragment fragment = new IngredientFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -42,7 +42,7 @@ public class IngredientFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.layout_ingredients_fragment, container, false);
-        Recipe recipe = (Recipe) getArguments().getSerializable(ingredBundle);
+        Recipe recipe = (Recipe) getArguments().getSerializable(Constants.RECIPE);
         ButterKnife.bind(this, view);
         context = getContext();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);

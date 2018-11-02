@@ -8,4 +8,5 @@
     <string name="ingredient">Ingredient</string>
     <string name="servings">Serves For &#160;</string>
     <string name="recipe_name">Recipe Name</string>
+    <string name="error_msg">Something is wrong with widget, Try opening app and open recipe</string>
 </resources>

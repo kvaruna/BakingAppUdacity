@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.varun.bakingappudacity.Adapters.RecipeDetailsPagerAdapter;
+import com.example.varun.bakingappudacity.Constants.Constants;
 import com.example.varun.bakingappudacity.Fragments.IngredientFragment;
 import com.example.varun.bakingappudacity.Fragments.StepsFragment;
 import com.example.varun.bakingappudacity.Models.Ingredient;
@@ -41,7 +42,7 @@ public class DetailsActivity extends AppCompatActivity {
         context = this;
 
         if( getIntent().getExtras() != null) {
-            recipe  =  (Recipe) getIntent().getExtras().getSerializable("Recipe");
+            recipe  =  (Recipe) getIntent().getExtras().getSerializable(Constants.RECIPE);
             this.setTitle(recipe.getName());
             viewPager.setAdapter(new RecipeDetailsPagerAdapter(this, getSupportFragmentManager(), recipe));
             tabLayout.setupWithViewPager(viewPager);

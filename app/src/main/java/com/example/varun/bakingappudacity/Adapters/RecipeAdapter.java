@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.varun.bakingappudacity.Activities.DetailsActivity;
+import com.example.varun.bakingappudacity.Constants.Constants;
 import com.example.varun.bakingappudacity.Models.Recipe;
 import com.example.varun.bakingappudacity.R;
 
@@ -57,7 +58,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     private void openDetailsActivity(Recipe recipe) {
         Intent intent = new Intent(context,DetailsActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("Recipe", recipe);
+        bundle.putSerializable(Constants.RECIPE, recipe);
         intent.putExtras(bundle);
         context.startActivity(intent);
     }

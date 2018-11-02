@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.example.varun.bakingappudacity.Constants.Constants;
 import com.example.varun.bakingappudacity.Models.Recipe;
 
 public class WidgetUpdateService extends IntentService {
@@ -15,7 +16,7 @@ public class WidgetUpdateService extends IntentService {
 
     public static void updatingWidget(Context context, Recipe recipe) {
         Intent intent = new Intent(context, WidgetUpdateService.class);
-        intent.putExtra("Recipe", recipe);
+        intent.putExtra(Constants.RECIPE, recipe);
         context.startService(intent);
     }
 
@@ -23,10 +24,10 @@ public class WidgetUpdateService extends IntentService {
     protected void onHandleIntent(@Nullable Intent intent) {
 
         if( intent != null) {
-            Recipe recipe = (Recipe) intent.getExtras().getSerializable("Recipe");
+            Recipe recipe = (Recipe) intent.getExtras().getSerializable(Constants.RECIPE);
             Intent serviceIntent = new Intent("android.appwidget.action.APPWIDGET_UPDATE_INGREDIENTS");
             serviceIntent.setAction("android.appwidget.action.APPWIDGET_UPDATE_INGREDIENTS");
-            serviceIntent.putExtra("Recipe",recipe);
+            serviceIntent.putExtra(Constants.RECIPE,recipe);
             sendBroadcast(serviceIntent);
         }
     }

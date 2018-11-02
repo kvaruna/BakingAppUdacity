@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.example.varun.bakingappudacity.Activities.DetailsActivity;
 import com.example.varun.bakingappudacity.Adapters.IngredientAdapter;
 import com.example.varun.bakingappudacity.Adapters.StepsAdapter;
+import com.example.varun.bakingappudacity.Constants.Constants;
 import com.example.varun.bakingappudacity.Models.Ingredient;
 import com.example.varun.bakingappudacity.Models.Recipe;
 import com.example.varun.bakingappudacity.Models.Step;
@@ -36,7 +37,7 @@ public class StepsFragment extends Fragment {
     public StepsFragment() { }
     public static StepsFragment newInstance(Recipe recipe) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable("Recipe", recipe);
+        bundle.putSerializable(Constants.RECIPE, recipe);
         StepsFragment fragment = new StepsFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -45,7 +46,7 @@ public class StepsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.layout_ingredients_fragment, container, false);
-        Recipe recipe = (Recipe) getArguments().getSerializable("Recipe");
+        Recipe recipe = (Recipe) getArguments().getSerializable(Constants.RECIPE);
         ButterKnife.bind(this, view);
         context = getContext();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
