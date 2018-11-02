@@ -2,6 +2,7 @@ package com.example.varun.bakingappudacity.Widget;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -12,7 +13,6 @@ import com.example.varun.bakingappudacity.R;
 import java.util.List;
 
 public class WidgetService extends RemoteViewsService {
-
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
         return new RecipeRemoteViewsFactory(getApplicationContext(), intent);
@@ -57,7 +57,7 @@ public class WidgetService extends RemoteViewsService {
             remoteViews.setTextViewText(R.id.ingredient_value, String.valueOf(ingredients.get(i).getQuantity() + " " + ingredients.get(i).getMeasure()));
             remoteViews.setTextViewText(R.id.recipeName, recipe.getName());
             Intent intent = new Intent();
-            remoteViews.setOnClickFillInIntent(R.id.rootView, intent);
+            remoteViews.setOnClickFillInIntent(R.id.rootView_widget, intent);
             return remoteViews;
 
         }

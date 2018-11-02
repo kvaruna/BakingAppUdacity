@@ -22,12 +22,12 @@ public class RecipeWidget extends AppWidgetProvider {
         if (recipe!=null){
             remoteViews.setTextViewText(R.id.recipeName,recipe.getName());
         }
+
         Intent intent =new Intent(context,WidgetService.class);
         remoteViews.setRemoteAdapter(R.id.rv_widget,intent);
-
         Intent appIntent = new Intent(context,DetailsActivity.class);
         appIntent.putExtra("Recipe",recipe);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context,0,appIntent,0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context,0,appIntent, 0);
         remoteViews.setPendingIntentTemplate(R.id.rv_widget,pendingIntent);
         manager.updateAppWidget(id,remoteViews);
     }
@@ -55,14 +55,11 @@ public class RecipeWidget extends AppWidgetProvider {
     }
     @Override
     public void onReceive(Context context, Intent intent) {
-
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, RecipeWidget.class));
         String bundle = intent.getAction();
         if( bundle.equals("android.appwidget.action.APPWIDGET_UPDATE_INGREDIENTS")) {
-            Log.d("This is where","I received recipe");
             recipe = (Recipe) intent.getExtras().getSerializable("Recipe");
-            Log.d("This is ","Name"+recipe.getName());
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.rv_widget);
             RecipeWidget.onUpdateWidgets(context, appWidgetManager, appWidgetIds);
             super.onReceive(context, intent);
