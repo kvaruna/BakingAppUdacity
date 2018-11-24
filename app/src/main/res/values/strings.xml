@@ -9,4 +9,5 @@
     <string name="servings">Serves For &#160;</string>
     <string name="recipe_name">Recipe Name</string>
     <string name="error_msg">Something is wrong with widget, Try opening app and open recipe</string>
+    <string name="add_widget_help">Open Baking App and select a recipe, then click on widget icon next to the Ingredient.</string>
 </resources>

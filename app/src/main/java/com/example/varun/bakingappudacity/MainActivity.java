@@ -3,6 +3,7 @@ package com.example.varun.bakingappudacity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.example.varun.bakingappudacity.APIClient.APIClient;
 import com.example.varun.bakingappudacity.APIMethods.APIMethods;
 import com.example.varun.bakingappudacity.Adapters.RecipeAdapter;
+import com.example.varun.bakingappudacity.Constants.Constants;
 import com.example.varun.bakingappudacity.Models.Recipe;
 
 import java.util.List;
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     Context context;
     private APIMethods apiMethods;
     List<Recipe> recipeList;
-
+    LinearLayoutManager linearLayoutManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         apiMethods = APIClient.getClient().create(APIMethods.class);
         getRecipesList();
+        setUpLayoutManager();
     }
 
     private void getRecipesList() {
@@ -62,9 +65,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    private void setUpLayoutManager(){
+        boolean isTablet = getResources().getBoolean(R.bool.isTablet);
+        boolean isLandscape = getResources().getBoolean(R.bool.isLandscape);
+        if(isTablet){
+            if(isLandscape){
+                linearLayoutManager = new GridLayoutManager(this, 3);
+            }
+            else{
+                linearLayoutManager = new GridLayoutManager(this, 2);
+            }
 
+        }
+        else{
+            if(isLandscape){
+                linearLayoutManager = new GridLayoutManager(this, 2);
+            }
+            else{
+                linearLayoutManager = new GridLayoutManager(this, 1);
+            }
+        }
+    }
     private void setupRecyclerView() {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         rv_recepies.setLayoutManager(linearLayoutManager);
         adapter = new RecipeAdapter(recipeList, context);
         rv_recepies.setAdapter(adapter);
@@ -73,5 +95,9 @@ public class MainActivity extends AppCompatActivity {
         loader.setVisibility(View.GONE);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
 
+    }
 }

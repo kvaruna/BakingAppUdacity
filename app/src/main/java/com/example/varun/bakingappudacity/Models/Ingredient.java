@@ -8,18 +8,18 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-
+@org.parceler.Parcel
 public class Ingredient implements Serializable {
 
     @SerializedName("quantity")
     @Expose
-    private String quantity;
+    String quantity;
     @SerializedName("measure")
     @Expose
-    private String measure;
+    String measure;
     @SerializedName("ingredient")
     @Expose
-    private String ingredient;
+    String ingredient;
 
 
     public String getQuantity() {

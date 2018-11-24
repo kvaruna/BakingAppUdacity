@@ -19,6 +19,8 @@ import com.example.varun.bakingappudacity.Constants.Constants;
 import com.example.varun.bakingappudacity.Models.Recipe;
 import com.example.varun.bakingappudacity.R;
 
+import org.parceler.Parcels;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -58,7 +60,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     private void openDetailsActivity(Recipe recipe) {
         Intent intent = new Intent(context,DetailsActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constants.RECIPE, recipe);
+        Parcelable recipeParcelable = Parcels.wrap(recipe);
+        bundle.putParcelable(Constants.RECIPE_ACT_KEY, recipeParcelable);
         intent.putExtras(bundle);
         context.startActivity(intent);
     }

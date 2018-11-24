@@ -8,26 +8,26 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.List;
-
+@org.parceler.Parcel
 public class Recipe implements Serializable {
     @SerializedName("id")
     @Expose
-    private Integer id;
+     Integer id;
     @SerializedName("name")
     @Expose
-    private String name;
+     String name;
     @SerializedName("ingredients")
     @Expose
-    private List<Ingredient> ingredients = null;
+     List<Ingredient> ingredients = null;
     @SerializedName("steps")
     @Expose
-    private List<Step> steps = null;
+     List<Step> steps = null;
     @SerializedName("servings")
     @Expose
-    private Integer servings;
+     Integer servings;
     @SerializedName("image")
     @Expose
-    private String image;
+     String image;
 
 
     public Integer getId() {

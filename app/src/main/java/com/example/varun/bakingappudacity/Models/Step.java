@@ -7,24 +7,24 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-
+@org.parceler.Parcel
 public class Step implements Serializable {
 
     @SerializedName("id")
     @Expose
-    private Integer id;
+     Integer id;
     @SerializedName("shortDescription")
     @Expose
-    private String shortDescription;
+     String shortDescription;
     @SerializedName("description")
     @Expose
-    private String description;
+     String description;
     @SerializedName("videoURL")
     @Expose
-    private String videoURL;
+     String videoURL;
     @SerializedName("thumbnailURL")
     @Expose
-    private String thumbnailURL;
+     String thumbnailURL;
 
 
     public Integer getId() {

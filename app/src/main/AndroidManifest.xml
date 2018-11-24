@@ -18,14 +18,10 @@
         </activity>
         <activity android:name=".Activities.DetailsActivity"
             android:theme="@style/AppTheme"/>
-        <activity android:name=".Activities.StepVideo"
+        <activity android:name=".Activities.StepDetailActivity"
             android:theme="@style/AppTheme"/>
 
-        <service android:name=".Widget.WidgetService"
-            android:permission="android.permission.BIND_REMOTEVIEWS"/>
-        <service android:name=".Widget.WidgetUpdateService"/>
-
-        <receiver android:name=".Widget.RecipeWidget">
+        <receiver android:name=".Widget.WidgetUpdate">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE_INGREDIENTS"/>

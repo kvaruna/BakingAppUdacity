@@ -1,0 +1,122 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_marginLeft="0dp"
+              android:layout_marginRight="0dp"
+              android:layout_weight="4"
+              android:baselineAligned="false"
+              android:divider="?android:attr/dividerHorizontal"
+              android:orientation="horizontal"
+              android:showDividers="middle">
+
+    <!--
+    This layout is a two-pane layout for the Items
+    master/detail flow.
+
+    -->
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="400dp"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:scrollbarStyle="outsideOverlay"
+        app:layoutManager="LinearLayoutManager"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+       tools:ignore="MissingPrefix">
+
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        xmlns:tools="http://schemas.android.com/tools"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/ingredient_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/ingredient_title_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/title_ingredient"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:paddingStart="16dp"
+                        android:text="Ingredient"
+                        android:textColor="@color/titleColor"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        />
+
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/ingredient_textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ingredient_title_layout"
+                    android:fontFamily="casual"
+                    android:padding="8dp"
+                    android:paddingStart="16dp"
+                    android:textSize="14sp"
+                    />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/steps_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ingredient_layout"
+                android:elevation="4dp"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:paddingStart="16dp"
+                    android:text="Steps"
+                    android:textColor="@color/titleColor"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/item_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:nestedScrollingEnabled="false"
+                    />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+    <FrameLayout
+        android:id="@+id/item_detail_container"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+
+        />
+
+</LinearLayout>
+
+
