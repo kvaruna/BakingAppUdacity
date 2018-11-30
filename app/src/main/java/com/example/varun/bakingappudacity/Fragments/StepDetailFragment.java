@@ -1,5 +1,6 @@
 package com.example.varun.bakingappudacity.Fragments;
 
+import android.content.Context;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.example.varun.bakingappudacity.Constants.Constants;
 import com.example.varun.bakingappudacity.Models.Step;
 import com.example.varun.bakingappudacity.R;
+import com.example.varun.bakingappudacity.Utils.MyMediaButtonReceiver;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.LoadControl;
@@ -66,7 +69,7 @@ public class StepDetailFragment extends Fragment {
     private TextView btnPrevious;
     private TextView tv_current;
     private ImageView iv_recipeStepDetails;
-
+    Context context;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -83,7 +86,7 @@ public class StepDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.item_step_detail, container, false);
-
+        context = getActivity();
         // Getting Step Values
         videoUrl = getArguments().getString(Constants.VIDEO_URL_KEY);
         desc = getArguments().getString(Constants.DESCRIPTION_KEY);
@@ -213,7 +216,7 @@ public class StepDetailFragment extends Fragment {
 
     private void populateStepValues(String description, String videoUrl, String thumbnailUrl, String currentStep) {
 
-        if (videoUrl.equals("")) {
+        if (TextUtils.isEmpty(videoUrl)) {
             exoPlayerView.setVisibility(View.INVISIBLE);
             noImgAvailable.setVisibility(View.VISIBLE);
 
@@ -233,7 +236,7 @@ public class StepDetailFragment extends Fragment {
         try {
             if (!thumbnailUrl.equals("")) {
                 iv_recipeStepDetails.setVisibility(View.VISIBLE);
-                Glide.with(getContext()).load(thumbnailUrl).into(iv_recipeStepDetails);
+                Glide.with(context).load(thumbnailUrl).into(iv_recipeStepDetails);
             }
         } catch (
                 Exception e) {
@@ -243,11 +246,13 @@ public class StepDetailFragment extends Fragment {
 
     private void initializePlayer(String videoUrl) {
         // Preparing Media Session
-        mediaSession = new MediaSessionCompat(getActivity(), TAG);
+        mediaSession = new MediaSessionCompat(context, TAG);
         mediaSession.setFlags(
                 MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS |
                         MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
-        mediaSession.setMediaButtonReceiver(null);
+        MyMediaButtonReceiver mediaButtonReceiver = new MyMediaButtonReceiver();
+        mediaButtonReceiver.onReceive(context,getActivity().getIntent());
+        // mediaSession.setMediaButtonReceiver(context,);
         // Preparing PlaybackState for media buttons
         PlaybackStateCompat.Builder stateBuilder = new PlaybackStateCompat.Builder()
                 .setActions(
@@ -267,7 +272,7 @@ public class StepDetailFragment extends Fragment {
 
             // Preparing the MediaSource
             String userAgent = Util.getUserAgent(getActivity(), getContext().getString(R.string.app_name));
-            DefaultDataSourceFactory dataSourceFactory = new DefaultDataSourceFactory(getActivity(), userAgent);
+            DefaultDataSourceFactory dataSourceFactory = new DefaultDataSourceFactory(context, userAgent);
             DefaultExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
             MediaSource mediaSource = new ExtractorMediaSource(
                     Uri.parse(videoUrl),

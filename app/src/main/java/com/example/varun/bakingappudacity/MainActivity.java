@@ -2,6 +2,9 @@ package com.example.varun.bakingappudacity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.varun.bakingappudacity.APIClient.APIClient;
 import com.example.varun.bakingappudacity.APIMethods.APIMethods;
+import com.example.varun.bakingappudacity.Activities.DataDownloaderIdlingResource;
 import com.example.varun.bakingappudacity.Adapters.RecipeAdapter;
 import com.example.varun.bakingappudacity.Constants.Constants;
 import com.example.varun.bakingappudacity.Models.Recipe;
@@ -39,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
     private APIMethods apiMethods;
     List<Recipe> recipeList;
     LinearLayoutManager linearLayoutManager;
+    @Nullable
+    public DataDownloaderIdlingResource mIdlingResource;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +56,14 @@ public class MainActivity extends AppCompatActivity {
         getRecipesList();
         setUpLayoutManager();
     }
-
+    @VisibleForTesting
+    @NonNull
+    public DataDownloaderIdlingResource getIdlingResource() {
+        if (mIdlingResource == null) {
+            mIdlingResource = new DataDownloaderIdlingResource();
+        }
+        return mIdlingResource;
+    }
     private void getRecipesList() {
         Call<List<Recipe>> getRecipes = apiMethods.getRecipes();
         getRecipes.enqueue(new Callback<List<Recipe>>() {
